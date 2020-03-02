@@ -41,24 +41,23 @@ const getNetworkAsync = () => __awaiter(void 0, void 0, void 0, function* () {
     }));
 });
 const setNetworkAsync = (network) => __awaiter(void 0, void 0, void 0, function* () {
-    return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            let settings = "";
-            if (network.type == 0 /* DHCP */) {
-                settings = DHCP;
-            }
-            else {
-                settings = STATIC(network.ip, network.sm, network.gw);
-                // sed - e "s/@ip/$IP/g" - e "s/@sm/$SM/g" - e "s/@gw/$GW/g" / opt / mp / static > /etc/network / interfaces
-            }
-            yield shell_1.default.executeAsync(`echo "${settings}" > /etc/network/interfaces`);
-            yield shell_1.default.executeAsync("ifdown eth0");
-            yield shell_1.default.executeAsync("ifup eth0");
+    try {
+        let settings = "";
+        if (network.type == 0 /* DHCP */) {
+            settings = DHCP;
         }
-        catch (e) {
-            return new Error(e);
+        else {
+            settings = STATIC(network.ip, network.sm, network.gw);
+            // sed - e "s/@ip/$IP/g" - e "s/@sm/$SM/g" - e "s/@gw/$GW/g" / opt / mp / static > /etc/network / interfaces
         }
-    }));
+        yield shell_1.default.spawn(`echo "${settings}" > /etc/network/interfaces && ifdown eth0 && ifup eth0`);
+        // await Shell.executeAsync("ifdown eth0");
+        // await Shell.executeAsync("ifup eth0");
+        return network;
+    }
+    catch (e) {
+        throw e;
+    }
 });
 const DHCP = `auto lo
 iface lo inet loopback
