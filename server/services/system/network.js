@@ -28,7 +28,11 @@ const getNetworkAsync = () => __awaiter(void 0, void 0, void 0, function* () {
             nw.gw = rslt.split("\n")[0];
             rslt = yield shell_1.default.executeAsync("cat /etc/resolv.conf |grep \"nameserver\" |cut -d' ' -f2");
             const allDns = rslt.split("\n");
-            nw.dns_1 = allDns[allDns.length];
+            allDns.forEach((value, index) => {
+                if (value !== "") {
+                    nw.dns_1 = value;
+                }
+            });
             resolve(nw);
         }
         catch (e) {
