@@ -79,7 +79,7 @@ const getNetworkTypeAsync = () => __awaiter(void 0, void 0, void 0, function* ()
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             let val = yield shell_1.default.executeAsync("cat /etc/network/interfaces |grep \"iface eth0 inet \" |cut -d' ' -f4");
-            if (val === "static") {
+            if (val.split("\n")[0] === "static") {
                 resolve(1 /* Static */);
             }
             else {
