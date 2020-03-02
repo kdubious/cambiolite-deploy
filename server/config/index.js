@@ -5,7 +5,7 @@ const rootPath = path_1.dirname(process.argv[1]);
 const tmpPath = "/opt/tmp";
 const paths = {
     root: rootPath,
-    ui: "/opt/ui/",
+    ui: "/opt/www/ui",
     firstUseFile: `${tmpPath}/first_use.lock`,
     cleanStartupFile: `${tmpPath}/boot.lock`,
 };

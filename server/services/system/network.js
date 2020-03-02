@@ -43,12 +43,12 @@ const setNetworkAsync = (network) => __awaiter(void 0, void 0, void 0, function*
                 settings = STATIC(network.ip, network.sm, network.gw);
                 // sed - e "s/@ip/$IP/g" - e "s/@sm/$SM/g" - e "s/@gw/$GW/g" / opt / mp / static > /etc/network / interfaces
             }
-            shell_1.default.executeAsync(`cat ${settings} > /etc/network/interfaces`);
-            shell_1.default.executeAsync("ifdown eth0");
-            shell_1.default.executeAsync("ifup eth0");
+            yield shell_1.default.executeAsync(`echo "${settings}" > /etc/network/interfaces`);
+            yield shell_1.default.executeAsync("ifdown eth0");
+            yield shell_1.default.executeAsync("ifup eth0");
         }
         catch (e) {
-            reject(e);
+            return new Error(e);
         }
     }));
 });
@@ -80,7 +80,7 @@ const getNetworkTypeAsync = () => __awaiter(void 0, void 0, void 0, function* ()
             }
         }
         catch (e) {
-            reject(e);
+            return new Error(e);
         }
     }));
 });

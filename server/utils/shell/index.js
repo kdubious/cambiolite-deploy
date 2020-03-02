@@ -24,11 +24,12 @@ const fs = __importStar(require("fs"));
 const util = __importStar(require("util"));
 const logging_1 = __importDefault(require("../logging"));
 const readFilePromise = util.promisify(fs.readFile);
+const execPromise = util.promisify(child_process.exec);
 function executeAsync(cmd) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { stdout, stderr } = yield execAsync(cmd);
-            return stdout.trim();
+            return stdout;
         }
         catch (e) {
             logging_1.default.log(e, logging_1.default.LoggingCategories.SYSTEM, true);
@@ -50,19 +51,14 @@ function executeAsyncWithError(cmd) {
 }
 function execAsync(command) {
     return __awaiter(this, void 0, void 0, function* () {
-        return new Promise((resolve, reject) => {
-            try {
-                child_process.exec(command, (error, stdout, stderr) => {
-                    if (error) {
-                        reject(error);
-                    }
-                    resolve({ stdout, stderr });
-                });
-            }
-            catch (error) {
-                logging_1.default.log(error, logging_1.default.LoggingCategories.ERROR, true);
-            }
-        });
+        try {
+            const { stdout, stderr } = yield execPromise(command);
+            return { stdout, stderr };
+        }
+        catch (e) {
+            logging_1.default.log(e, logging_1.default.LoggingCategories.SYSTEM, true);
+            throw new Error(e);
+        }
     });
 }
 function makeFileAsync(path, data) {
