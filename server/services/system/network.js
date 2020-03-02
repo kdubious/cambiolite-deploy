@@ -20,11 +20,15 @@ const getNetworkAsync = () => __awaiter(void 0, void 0, void 0, function* () {
         try {
             let nw = new network_1.Network();
             nw.type = yield getNetworkTypeAsync();
-            nw.ip = yield shell_1.default.executeAsync("ip addr list " + eth + " |grep \"inet \" |cut -d' ' -f6|cut -d/ -f1");
-            nw.sm = yield shell_1.default.executeAsync("ip addr list " + eth + " |grep \"inet \" |cut -d' ' -f6|cut -d/ -f2");
-            // $netmask = cidr2NetmaskAddr($ip."\/".$cidr);
-            nw.gw = yield shell_1.default.executeAsync("route -n |grep \"0.0.0.0\" |grep \"UG\" |cut -d' ' -f10");
-            nw.dns_1 = yield shell_1.default.executeAsync("cat /etc/resolv.conf |grep \"nameserver\" |cut -d' ' -f2");
+            let rslt = yield shell_1.default.executeAsync("ip addr list " + eth + " |grep \"inet \" |cut -d' ' -f6|cut -d/ -f1");
+            nw.ip = rslt.split("\n")[0];
+            rslt = yield shell_1.default.executeAsync("ip addr list " + eth + " |grep \"inet \" |cut -d' ' -f6|cut -d/ -f2");
+            nw.sm = rslt.split("\n")[0];
+            rslt = yield shell_1.default.executeAsync("route -n |grep \"0.0.0.0\" |grep \"UG\" |cut -d' ' -f10");
+            nw.gw = rslt.split("\n")[0];
+            rslt = yield shell_1.default.executeAsync("cat /etc/resolv.conf |grep \"nameserver\" |cut -d' ' -f2");
+            const allDns = rslt.split("\n");
+            nw.dns_1 = allDns[allDns.length];
             resolve(nw);
         }
         catch (e) {
