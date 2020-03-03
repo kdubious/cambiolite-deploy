@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const network_1 = require("../../models/network");
+const logging_1 = __importDefault(require("../../utils/logging"));
 const shell_1 = __importDefault(require("../../utils/shell"));
 const getNetworkConnmanAsync = () => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
@@ -118,13 +119,17 @@ const getTypeFromConnman = (method) => {
     }
 };
 const parseConnmanIPv4Variable = (variable, service) => __awaiter(void 0, void 0, void 0, function* () {
-    const prefix = `connmanctl services ${service} | grep 'IPv4 = \[ ' | `;
-    let rslt = yield shell_1.default.executeAsync(`${prefix} grep -o '${variable}=[^[:blank:]]*`);
+    const prefix = `connmanctl services ${service} | grep 'IPv4 = ' |`;
+    const cmd = `${prefix} grep -o '${variable}=[^[:blank:]]*'`;
+    logging_1.default.log(cmd, logging_1.default.LoggingCategories.SERVICES);
+    let rslt = yield shell_1.default.executeAsync(cmd);
     return rslt.split("\n")[0].replace(variable, "").replace("=", "").replace(",", "");
 });
 const parseConnmanNameservers = (service) => __awaiter(void 0, void 0, void 0, function* () {
-    const prefix = `connmanctl services ${service} | grep 'Nameservers = \[' | `;
-    let rslt = yield shell_1.default.executeAsync(`${prefix} cut -d' ' -f6`);
+    const prefix = `connmanctl services ${service} | grep 'Nameservers = ' |`;
+    const cmd = `${prefix} cut -d' ' -f6`;
+    logging_1.default.log(cmd, logging_1.default.LoggingCategories.SERVICES);
+    let rslt = yield shell_1.default.executeAsync(cmd);
     return rslt.split("\n")[0];
 });
 const network = {
