@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const notifications_1 = __importDefault(require("../services/notifications"));
 const config_1 = __importDefault(require("../services/system/config"));
 const debug_1 = __importDefault(require("../services/system/debug"));
+const update_1 = __importDefault(require("../services/system/update"));
 const errors_1 = require("../utils/errors");
 var systemRouter = express_1.default.Router();
 // middleware that is specific to this router
@@ -37,6 +38,16 @@ systemRouter.get('/debug', function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         notifications_1.default.notify("Hello World", "Greetings.");
         errors_1.handleAsyncRouteErrors(res.send(yield debug_1.default.all()));
+    });
+});
+systemRouter.get('/update', function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        errors_1.handleAsyncRouteErrors(res.send(yield update_1.default.getUpdateRequired()));
+    });
+});
+systemRouter.post('/update', function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        errors_1.handleAsyncRouteErrors(res.send(yield update_1.default.doUpdate()));
     });
 });
 exports.default = systemRouter;
