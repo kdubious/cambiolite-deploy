@@ -23,7 +23,7 @@ networkRouter.use(function timeLog(req, res, next) {
 });
 networkRouter.get('/config', function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        errors_1.handleAsyncRouteErrors(res.send(yield network_2.default.getNetworkAsync()));
+        errors_1.handleAsyncRouteErrors(res.send(yield network_2.default.getNetworkConnmanAsync()));
     });
 });
 networkRouter.post('/config', function (req, res, next) {

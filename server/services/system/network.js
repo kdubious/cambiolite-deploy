@@ -14,6 +14,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const network_1 = require("../../models/network");
 const shell_1 = __importDefault(require("../../utils/shell"));
+const getNetworkConnmanAsync = () => __awaiter(void 0, void 0, void 0, function* () {
+    return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            let nw = new network_1.Network();
+            let rslt = yield shell_1.default.executeAsync("connmanctl services | cut -c 26-");
+            const service = rslt.split("/n")[0];
+            nw.type = getTypeFromConnman(yield parseConnmanIPv4Variable("Method", service));
+            nw.ip = yield parseConnmanIPv4Variable("Address", service);
+            nw.sm = yield parseConnmanIPv4Variable("Netmask", service);
+            nw.gw = yield parseConnmanIPv4Variable("Gateway", service);
+            nw.dns_1 = yield parseConnmanNameservers(service);
+            resolve(nw);
+        }
+        catch (e) {
+            reject(e);
+        }
+    }));
+});
 const getNetworkAsync = () => __awaiter(void 0, void 0, void 0, function* () {
     const eth = "eth0";
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
@@ -91,7 +109,26 @@ const getNetworkTypeAsync = () => __awaiter(void 0, void 0, void 0, function* ()
         }
     }));
 });
+const getTypeFromConnman = (method) => {
+    if (method === "dhcp") {
+        return 0 /* DHCP */;
+    }
+    else {
+        return 1 /* Static */;
+    }
+};
+const parseConnmanIPv4Variable = (variable, service) => __awaiter(void 0, void 0, void 0, function* () {
+    const prefix = `connmanctl services ${service} | grep 'IPv4 = \[ ' | `;
+    let rslt = yield shell_1.default.executeAsync(`${prefix} grep -o '${variable}=[^[:blank:]]*`);
+    return rslt.split("\n")[0].replace(variable, "").replace("=", "").replace(",", "");
+});
+const parseConnmanNameservers = (service) => __awaiter(void 0, void 0, void 0, function* () {
+    const prefix = `connmanctl services ${service} | grep 'Nameservers = \[' | `;
+    let rslt = yield shell_1.default.executeAsync(`${prefix} cut -d' ' -f6`);
+    return rslt.split("\n")[0];
+});
 const network = {
+    getNetworkConnmanAsync,
     getNetworkAsync,
     setNetworkAsync,
 };
