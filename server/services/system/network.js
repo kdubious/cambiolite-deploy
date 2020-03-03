@@ -21,6 +21,7 @@ const getNetworkConnmanAsync = () => __awaiter(void 0, void 0, void 0, function*
             let nw = new network_1.Network();
             let rslt = yield shell_1.default.executeAsync("connmanctl services | cut -c 26-");
             const service = rslt.split("/n")[0];
+            logging_1.default.log(service, logging_1.default.LoggingCategories.SERVICES);
             nw.type = getTypeFromConnman(yield parseConnmanIPv4Variable("Method", service));
             nw.ip = yield parseConnmanIPv4Variable("Address", service);
             nw.sm = yield parseConnmanIPv4Variable("Netmask", service);
