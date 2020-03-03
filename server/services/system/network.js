@@ -150,14 +150,18 @@ const parseConnmanNameservers = (service) => __awaiter(void 0, void 0, void 0, f
     return rslt.split("\n")[0];
 });
 const setConnmanDHCP = (service) => __awaiter(void 0, void 0, void 0, function* () {
-    const cmd = `connmanctl config ${service} ipv4 dhcp`;
+    // clear DNS so we get it from DHCP
+    let cmd = `connmanctl config ${service} nameservers`;
+    cmd += ` && connmanctl config ${service} ipv4 dhcp`;
     logging_1.default.log(cmd, logging_1.default.LoggingCategories.SYSTEM);
     yield shell_1.default.spawn(cmd);
 });
 const setConnmanStatic = (service, network) => __awaiter(void 0, void 0, void 0, function* () {
+    // set IP data
     let cmd = `connmanctl config ${service} ipv4 manual ${network.ip} ${network.sm} ${network.gw}`;
     logging_1.default.log(cmd, logging_1.default.LoggingCategories.SYSTEM);
-    cmd += `&& connmanctl config ${service} nameservers ${network.dns_1}`;
+    // and also DNS
+    cmd += ` && connmanctl config ${service} nameservers ${network.dns_1}`;
     logging_1.default.log(cmd, logging_1.default.LoggingCategories.SYSTEM);
     yield shell_1.default.spawn(cmd);
 });
