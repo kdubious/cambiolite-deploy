@@ -6,6 +6,7 @@ const tmpPath = "/opt/tmp";
 const paths = {
     root: rootPath,
     ui: "/opt/www/ui",
+    motd: "/opt/www/server/motd.txt",
     firstUseFile: `${tmpPath}/first_use.lock`,
     cleanStartupFile: `${tmpPath}/boot.lock`,
 };

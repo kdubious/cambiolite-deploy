@@ -12,17 +12,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const config_1 = __importDefault(require("../../config"));
 const shell_1 = __importDefault(require("../../utils/shell"));
+const getCurrentMotd = () => __awaiter(void 0, void 0, void 0, function* () {
+    const rslt = yield shell_1.default.executeAsync(`cat ${config_1.default.paths.motd}`);
+    return rslt;
+});
 const getUpdateRequired = () => __awaiter(void 0, void 0, void 0, function* () {
-    const rslt = yield shell_1.default.executeAsync("GIT_SSH_COMMAND='ssh -i /opt/ssh.key' git fetch --dry-run");
-    return rslt !== "";
+    const rslt = yield shell_1.default.executeAsyncWithError("GIT_SSH_COMMAND='ssh -i /opt/ssh.key' git fetch --dry-run");
+    // GIT reports staus on STDERR!!!
+    return rslt.stderr !== "";
 });
 const doUpdate = () => __awaiter(void 0, void 0, void 0, function* () {
     const rslt = yield shell_1.default.executeAsync("GIT_SSH_COMMAND='ssh -i /opt/ssh.key' git pull");
     return rslt.indexOf("Already up to date.") === -1;
 });
 const update = {
-    getUpdateRequired: getUpdateRequired,
+    getCurrentMotd,
+    getUpdateRequired,
     doUpdate,
 };
 exports.default = update;

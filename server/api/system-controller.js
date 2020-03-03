@@ -40,6 +40,11 @@ systemRouter.get('/debug', function (req, res, next) {
         errors_1.handleAsyncRouteErrors(res.send(yield debug_1.default.all()));
     });
 });
+systemRouter.get('/motd', function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        errors_1.handleAsyncRouteErrors(res.send(yield update_1.default.getCurrentMotd()));
+    });
+});
 systemRouter.get('/update', function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         errors_1.handleAsyncRouteErrors(res.send(yield update_1.default.getUpdateRequired()));
