@@ -151,10 +151,12 @@ const parseConnmanNameservers = (service) => __awaiter(void 0, void 0, void 0, f
 });
 const setConnmanDHCP = (service) => __awaiter(void 0, void 0, void 0, function* () {
     const cmd = `connmanctl config ${service} --ipv4 dhcp`;
+    logging_1.default.log(cmd, logging_1.default.LoggingCategories.SYSTEM);
     yield shell_1.default.spawn(cmd);
 });
 const setConnmanStatic = (service, address, netmask, gateway) => __awaiter(void 0, void 0, void 0, function* () {
     const cmd = `connmanctl config ${service} --ipv4 manual ${address} ${netmask} ${gateway}`;
+    logging_1.default.log(cmd, logging_1.default.LoggingCategories.SYSTEM);
     yield shell_1.default.spawn(cmd);
 });
 const network = {
