@@ -14,6 +14,7 @@ const bodyParser = __importStar(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
 const http_1 = require("http");
+const path_1 = __importDefault(require("path"));
 const config_1 = __importDefault(require("../config"));
 const service_result_1 = require("../models/service-result");
 const notifications_1 = __importDefault(require("../services/notifications"));
@@ -42,6 +43,17 @@ class API {
             const result = new service_result_1.ServiceResult(err, err.message, false);
             res.status(500).contentType("json").send(result);
         };
+        this.allowedExtensions = [
+            '.js',
+            '.ico',
+            '.css',
+            '.png',
+            '.jpg',
+            '.woff2',
+            '.woff',
+            '.ttf',
+            '.svg',
+        ];
         this.createApp();
         // this.configure();
         this.initializeMiddlewares();
@@ -61,7 +73,6 @@ class API {
         // support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: false }));
         // static paths
-        this.app.use("/", express_1.default.static(config_1.default.paths.ui));
         // CORS for debugging, at least
         this.app.use(cors_1.default(this.corsOptions));
         logging_1.default.log("     initializeMiddlewares()", this.category);
@@ -72,6 +83,15 @@ class API {
         this.app.use("/api/audio", audio_controller_1.default);
         this.app.use("/api/network", network_controller_1.default);
         logging_1.default.log("     initializeRoutes()", this.category);
+        // Redirect all the other resquests
+        this.app.get('*', (req, res) => {
+            if (this.allowedExtensions.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
+                res.sendFile(path_1.default.resolve(`${config_1.default.paths.ui}/${req.url}`));
+            }
+            else {
+                res.sendFile(path_1.default.resolve(`${config_1.default.paths.ui}/index.html`));
+            }
+        });
     }
     initializeErrorHandling() {
         this.app.use(this.logErrors);
