@@ -42,7 +42,7 @@ const setNetworkConnmanAsync = (network) => __awaiter(void 0, void 0, void 0, fu
             yield setConnmanDHCP(service);
         }
         else {
-            yield setConnmanStatic(service, network.ip, network.sm, network.gw);
+            yield setConnmanStatic(service, network);
         }
         return network;
     }
@@ -150,12 +150,14 @@ const parseConnmanNameservers = (service) => __awaiter(void 0, void 0, void 0, f
     return rslt.split("\n")[0];
 });
 const setConnmanDHCP = (service) => __awaiter(void 0, void 0, void 0, function* () {
-    const cmd = `connmanctl config ${service} --ipv4 dhcp`;
+    const cmd = `connmanctl config ${service} ipv4 dhcp`;
     logging_1.default.log(cmd, logging_1.default.LoggingCategories.SYSTEM);
     yield shell_1.default.spawn(cmd);
 });
-const setConnmanStatic = (service, address, netmask, gateway) => __awaiter(void 0, void 0, void 0, function* () {
-    const cmd = `connmanctl config ${service} --ipv4 manual ${address} ${netmask} ${gateway}`;
+const setConnmanStatic = (service, network) => __awaiter(void 0, void 0, void 0, function* () {
+    let cmd = `connmanctl config ${service} ipv4 manual ${network.ip} ${network.sm} ${network.gw}`;
+    logging_1.default.log(cmd, logging_1.default.LoggingCategories.SYSTEM);
+    cmd += `&& connmanctl config ${service} nameservers ${network.dns_1}`;
     logging_1.default.log(cmd, logging_1.default.LoggingCategories.SYSTEM);
     yield shell_1.default.spawn(cmd);
 });
