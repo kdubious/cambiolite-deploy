@@ -34,6 +34,22 @@ const getNetworkConnmanAsync = () => __awaiter(void 0, void 0, void 0, function*
         }
     }));
 });
+const setNetworkConnmanAsync = (network) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        let rslt = yield shell_1.default.executeAsync("connmanctl services | cut -c 26-");
+        const service = rslt.split("/n")[0].trim();
+        if (network.type == 0 /* DHCP */) {
+            yield setConnmanDHCP(service);
+        }
+        else {
+            yield setConnmanStatic(service, network.ip, network.sm, network.gw);
+        }
+        return network;
+    }
+    catch (e) {
+        throw e;
+    }
+});
 const getNetworkAsync = () => __awaiter(void 0, void 0, void 0, function* () {
     const eth = "eth0";
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
@@ -133,8 +149,17 @@ const parseConnmanNameservers = (service) => __awaiter(void 0, void 0, void 0, f
     let rslt = yield shell_1.default.executeAsync(cmd);
     return rslt.split("\n")[0];
 });
+const setConnmanDHCP = (service) => __awaiter(void 0, void 0, void 0, function* () {
+    const cmd = `connmanctl config ${service} --ipv4 dhcp`;
+    yield shell_1.default.spawn(cmd);
+});
+const setConnmanStatic = (service, address, netmask, gateway) => __awaiter(void 0, void 0, void 0, function* () {
+    const cmd = `connmanctl config ${service} --ipv4 manual ${address} ${netmask} ${gateway}`;
+    yield shell_1.default.spawn(cmd);
+});
 const network = {
     getNetworkConnmanAsync,
+    setNetworkConnmanAsync,
     getNetworkAsync,
     setNetworkAsync,
 };

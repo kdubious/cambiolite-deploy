@@ -28,7 +28,7 @@ networkRouter.get('/config', function (req, res, next) {
 });
 networkRouter.post('/config', function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        errors_1.handleAsyncRouteErrors(res.send(yield network_2.default.setNetworkAsync(new network_1.Network(req.body))));
+        errors_1.handleAsyncRouteErrors(res.send(yield network_2.default.setNetworkConnmanAsync(new network_1.Network(req.body))));
     });
 });
 exports.default = networkRouter;
