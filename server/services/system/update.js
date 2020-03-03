@@ -14,8 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const shell_1 = __importDefault(require("../../utils/shell"));
 const getUpdateRequired = () => __awaiter(void 0, void 0, void 0, function* () {
-    const rslt = yield shell_1.default.executeAsync("git status");
-    return rslt.indexOf("Your branch is up to date") === -1;
+    const rslt = yield shell_1.default.executeAsync("GIT_SSH_COMMAND='ssh -i /opt/ssh.key' git fetch --dry-run");
+    return rslt !== "";
 });
 const doUpdate = () => __awaiter(void 0, void 0, void 0, function* () {
     const rslt = yield shell_1.default.executeAsync("GIT_SSH_COMMAND='ssh -i /opt/ssh.key' git pull");
