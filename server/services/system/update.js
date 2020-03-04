@@ -29,7 +29,11 @@ const doUpdate = () => __awaiter(void 0, void 0, void 0, function* () {
     const updated = rslt.indexOf("Already up to date.") === -1;
     if (updated) {
         logging_1.default.log("restarting node", logging_1.default.LoggingCategories.SERVICES);
-        shell_1.default.spawn("/etc/init.d/S42node", ["restart"]);
+        shell_1.default.spawn("/etc/init.d/S42node", ["start"], {
+            detached: true,
+            stdio: ["ignore"],
+        }).unref();
+        process.exit();
     }
     return updated;
 });

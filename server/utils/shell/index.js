@@ -94,12 +94,13 @@ function readFileAsync(path, options) {
         }));
     });
 }
-function spawn(command, args) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return child_process.spawn(command, args, {
-            shell: true
-        });
-    });
+function spawn(command, args, options) {
+    if (!options) {
+        options = {
+            shell: true,
+        };
+    }
+    return child_process.spawn(command, args, options);
 }
 const Shell = {
     executeAsync,
