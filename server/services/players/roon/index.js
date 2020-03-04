@@ -16,6 +16,7 @@ const output_1 = require("../../../models/output");
 const system_v_1 = __importDefault(require("../../../models/system-v"));
 const logging_1 = __importDefault(require("../../../utils/logging"));
 const shell_1 = __importDefault(require("../../../utils/shell"));
+const db_1 = __importDefault(require("../../db"));
 const roon_service_config_1 = __importDefault(require("./roon-service-config"));
 const configPath = "/opt/roon/config.json";
 const init = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -34,7 +35,7 @@ const saveConfig = (config) => __awaiter(void 0, void 0, void 0, function* () {
     logging_1.default.log(`config:`, logging_1.default.LoggingCategories.RAAT);
     logging_1.default.log(config, logging_1.default.LoggingCategories.RAAT);
     if (config instanceof output_1.Output) {
-        data = buildConfig(config);
+        data = yield buildConfig(config);
     }
     else {
         data = config;
@@ -56,14 +57,14 @@ const loadConfig = () => __awaiter(void 0, void 0, void 0, function* () {
     const obj = JSON.parse(data);
     return obj;
 });
-const buildConfig = (output) => {
+const buildConfig = (output) => __awaiter(void 0, void 0, void 0, function* () {
     const vendor = "Musica Pristina";
     // TODO: upgrade to AC III
     const model = "A Cappella II";
     const configUrl = "http://__SELF__/";
-    const serial = "PENDING";
     const version = "3.0.0";
-    const uniqueId = "4a82f59f-223b-42d3-0122-dacdacdac999";
+    const serial = yield db_1.default.get("device:serial");
+    const uniqueId = yield db_1.default.get("device:id");
     const hwIndex = parseInt(output.output.replace("hw:", "").substring(0, 1), 10);
     const outputSection = {
         buffer_duration: output.bufferDuration,
@@ -106,7 +107,7 @@ const buildConfig = (output) => {
         volume: volumeSection,
         watch: watchSection,
     };
-};
+});
 const service = {
     disable: () => __awaiter(void 0, void 0, void 0, function* () {
         const okStop = yield service.stop();
