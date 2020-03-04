@@ -94,9 +94,9 @@ function readFileAsync(path, options) {
         }));
     });
 }
-function spawn(command) {
+function spawn(command, args) {
     return __awaiter(this, void 0, void 0, function* () {
-        return child_process.spawn(command, {
+        return child_process.spawn(command, args, {
             shell: true
         });
     });

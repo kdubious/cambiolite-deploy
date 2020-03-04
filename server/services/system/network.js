@@ -86,7 +86,7 @@ const setNetworkAsync = (network) => __awaiter(void 0, void 0, void 0, function*
             settings = STATIC(network.ip, network.sm, network.gw);
             // sed - e "s/@ip/$IP/g" - e "s/@sm/$SM/g" - e "s/@gw/$GW/g" / opt / mp / static > /etc/network / interfaces
         }
-        yield shell_1.default.spawn(`echo "${settings}" > /etc/network/interfaces && ifdown eth0 && sleep 2 && ifup eth0`);
+        yield shell_1.default.spawn(`echo "${settings}" > /etc/network/interfaces && ifdown eth0 && sleep 2 && ifup eth0`, []);
         // await Shell.executeAsync("ifdown eth0");
         // await Shell.executeAsync("ifup eth0");
         return network;
@@ -154,7 +154,7 @@ const setConnmanDHCP = (service) => __awaiter(void 0, void 0, void 0, function* 
     let cmd = `connmanctl config ${service} nameservers`;
     cmd += ` && connmanctl config ${service} ipv4 dhcp`;
     logging_1.default.log(cmd, logging_1.default.LoggingCategories.SYSTEM);
-    yield shell_1.default.spawn(cmd);
+    yield shell_1.default.spawn(cmd, []);
 });
 const setConnmanStatic = (service, network) => __awaiter(void 0, void 0, void 0, function* () {
     // set IP data
@@ -163,7 +163,7 @@ const setConnmanStatic = (service, network) => __awaiter(void 0, void 0, void 0,
     // and also DNS
     cmd += ` && connmanctl config ${service} nameservers ${network.dns_1}`;
     logging_1.default.log(cmd, logging_1.default.LoggingCategories.SYSTEM);
-    yield shell_1.default.spawn(cmd);
+    yield shell_1.default.spawn(cmd, []);
 });
 const network = {
     getNetworkConnmanAsync,
