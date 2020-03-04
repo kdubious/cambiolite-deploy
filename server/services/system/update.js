@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const config_1 = __importDefault(require("../../config"));
+const logging_1 = __importDefault(require("../../utils/logging"));
 const shell_1 = __importDefault(require("../../utils/shell"));
 const getCurrentMotd = () => __awaiter(void 0, void 0, void 0, function* () {
     const rslt = yield shell_1.default.executeAsync(`cat ${config_1.default.paths.motd}`);
@@ -27,6 +28,7 @@ const doUpdate = () => __awaiter(void 0, void 0, void 0, function* () {
     const rslt = yield shell_1.default.executeAsync("GIT_SSH_COMMAND='ssh -i /opt/ssh.key' git pull");
     const updated = rslt.indexOf("Already up to date.") === -1;
     if (updated) {
+        logging_1.default.log("restarting node", logging_1.default.LoggingCategories.SERVICES);
         shell_1.default.spawn("/etc/init.d/S42node restart");
     }
     return updated;
