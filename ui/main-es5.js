@@ -3686,8 +3686,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           // });
           // const rslt = new ServiceResult(reg);
           // return of(rslt);
-          return this.http.get('/api/registration').pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (result) {
-            _this13.log('GET: /api/registration', result);
+          return this.http.get('/api/system/registration').pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (result) {
+            _this13.log('GET: /api/system/registration', result);
 
             return new _service_result__WEBPACK_IMPORTED_MODULE_4__["ServiceResult"](result, '', true);
           }));
@@ -3697,14 +3697,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         value: function registrationSave$(data) {
           var _this14 = this;
 
-          return this.http.post('/api/registration', data).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (result) {
-            _this14.log('POST: /api/registration', result); // const data = new Registration(result.data);
+          return this.http.post('/api/system/registration', data).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (result) {
+            _this14.log('POST: /api/system/registration', result); // const data = new Registration(result.data);
             // const msg = 'You\'ve successfully updated your registration.';
             // const success = true;
 
 
             return new _service_result__WEBPACK_IMPORTED_MODULE_4__["ServiceResult"](result, '', true);
-          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError('PUT: /api/registration')));
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError('POST: /api/system/registration')));
         }
       }, {
         key: "getAudioConfig$",
@@ -4095,6 +4095,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
       }
+
+      if (rf & 2) {
+        var ctx_r34 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](9);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("disabled", ctx_r34.updating);
+      }
     }
 
     function UpdateComponent_div_5_Template(rf, ctx) {
@@ -4118,6 +4126,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.isUpdateRequired = false;
         this.isCheckingUpdateRequired = true;
         this.motd = "";
+        this.updating = false;
       }
 
       _createClass(UpdateComponent, [{
@@ -4142,6 +4151,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         value: function doUpdate() {
           var _this21 = this;
 
+          this.updating = true;
           this.service.doUpdate$().subscribe(function (result) {
             var msg = "";
 
@@ -4159,6 +4169,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             });
 
             setTimeout(function () {
+              _this21.updating = true;
               window.location.reload();
             }, 2000);
           }, function (error) {
@@ -4179,7 +4190,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       selectors: [["app-update"]],
       decls: 8,
       vars: 4,
-      consts: [["id", "section-network", 1, "container", "flex-fill"], [4, "ngIf"], [1, "mt-5"], ["mode", "indeterminate"], ["type", "button", 1, "btn", "btn-primary", 3, "click"]],
+      consts: [["id", "section-network", 1, "container", "flex-fill"], [4, "ngIf"], [1, "mt-5"], ["mode", "indeterminate"], ["type", "button", 1, "btn", "btn-primary", 3, "disabled", "click"]],
       template: function UpdateComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "section", 0);
@@ -4192,7 +4203,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](3, UpdateComponent_div_3_Template, 5, 0, "div", 1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](4, UpdateComponent_div_4_Template, 11, 0, "div", 1);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](4, UpdateComponent_div_4_Template, 11, 1, "div", 1);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](5, UpdateComponent_div_5_Template, 2, 0, "div", 1);
 
