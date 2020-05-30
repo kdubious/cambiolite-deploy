@@ -22,6 +22,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
 const api_1 = require("./api");
 const logging_1 = __importDefault(require("./utils/logging"));
+const test_1 = require("./utils/test/test");
 const path = require("path");
 logging_1.default.enableLogging();
 logging_1.default.log(path.resolve(__dirname, "./motd.txt"));
@@ -59,4 +60,6 @@ function processExit(msg) {
     throw new Error("SIGINT / SIGTERM");
 }
 startup();
+const a = test_1.toUpper("a");
+const b = test_1.toLower("BBB");
 //# sourceMappingURL=server.js.map

@@ -1,0 +1,19 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "type": "node",
+    "request": "attach",
+    "name": "Attach to Remote",
+    "address": "10.0.0.63",
+    "port": 9229,
+    "localRoot": "${workspaceFolder}/../cambiolite-deploy/server",
+    "remoteRoot": "/opt/www/server",
+    "protocol": "inspector",
+    "outFiles": [
+        "${workspaceFolder}/../cambiolite-deploy/server/**/*.js"
+    ],
+    "skipFiles": [
+        "<node_internals>/**"
+    ]
+}

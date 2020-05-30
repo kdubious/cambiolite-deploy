@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Cambio for Roon only",
   "main": "server.js",
+  "engines": {
+    "node": "12.16.1"
+  },
   "scripts": {
     "compile": "tsc -p .",
     "copy": "cp ./src/motd.txt ../../cambiolite-deploy/server/ && cp package.json ../../cambiolite-deploy/server/",

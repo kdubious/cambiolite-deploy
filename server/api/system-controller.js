@@ -13,9 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const registration_1 = require("../models/registration");
 const notifications_1 = __importDefault(require("../services/notifications"));
 const config_1 = __importDefault(require("../services/system/config"));
 const debug_1 = __importDefault(require("../services/system/debug"));
+const registration_2 = __importDefault(require("../services/system/registration"));
 const update_1 = __importDefault(require("../services/system/update"));
 const errors_1 = require("../utils/errors");
 var systemRouter = express_1.default.Router();
@@ -43,6 +45,16 @@ systemRouter.get('/debug', function (req, res, next) {
 systemRouter.get('/motd', function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         errors_1.handleAsyncRouteErrors(res.send(yield update_1.default.getCurrentMotd()));
+    });
+});
+systemRouter.get('/registration', function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        errors_1.handleAsyncRouteErrors(res.send(yield registration_2.default.getRegistrationAsync()));
+    });
+});
+systemRouter.post('/registration', function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        errors_1.handleAsyncRouteErrors(res.send(yield registration_2.default.setRegistrationAsync(new registration_1.Registration(req.body))));
     });
 });
 systemRouter.get('/update', function (req, res, next) {
