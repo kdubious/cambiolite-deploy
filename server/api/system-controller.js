@@ -20,6 +20,7 @@ const debug_1 = __importDefault(require("../services/system/debug"));
 const registration_2 = __importDefault(require("../services/system/registration"));
 const update_1 = __importDefault(require("../services/system/update"));
 const errors_1 = require("../utils/errors");
+const logging_1 = __importDefault(require("../utils/logging"));
 var systemRouter = express_1.default.Router();
 // middleware that is specific to this router
 systemRouter.use(function timeLog(req, res, next) {
@@ -64,7 +65,11 @@ systemRouter.get('/update', function (req, res, next) {
 });
 systemRouter.post('/update', function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
+        logging_1.default.log("* BEGIN UPDATE", logging_1.default.LoggingCategories.SERVICES);
         errors_1.handleAsyncRouteErrors(res.send(yield update_1.default.doUpdate()));
+        logging_1.default.log("* END UPDATE: post response", logging_1.default.LoggingCategories.SERVICES);
+        process.exit();
+        // Logging.log("* POST: restarting node", Logging.LoggingCategories.SERVICES);
     });
 });
 exports.default = systemRouter;

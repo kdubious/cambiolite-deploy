@@ -33,7 +33,9 @@ const doUpdate = () => __awaiter(void 0, void 0, void 0, function* () {
             detached: true,
             stdio: ["ignore"],
         }).unref();
-        process.exit();
+        // can't exit here, need to return a response first
+        // process.exit();
+        logging_1.default.log("* POST: restarting node", logging_1.default.LoggingCategories.SERVICES);
     }
     return updated;
 });
