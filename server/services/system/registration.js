@@ -19,6 +19,8 @@ const getRegistrationAsync = () => __awaiter(void 0, void 0, void 0, function* (
         try {
             const registrationData = yield db_1.default.get("registration:data");
             let reg = new registration_1.Registration(registrationData);
+            reg.device_id = yield db_1.default.get("device:id");
+            reg.serial_number = yield db_1.default.get("device:serial");
             resolve(reg);
         }
         catch (e) {
