@@ -12,7 +12,7 @@ class Output {
         this.volume = false;
         this.mute = false;
         this.bufferDuration = 0.04;
-        this.max_bits = 32;
+        this.maxBits = 32;
         this.strategy = 1 /* OCXO */;
         Object.assign(this, jsonData);
     }

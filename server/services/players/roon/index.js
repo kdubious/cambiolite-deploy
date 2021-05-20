@@ -73,7 +73,7 @@ const buildConfig = (output) => __awaiter(void 0, void 0, void 0, function* () {
         // dsd_mode: hwIndex === 0 ? "dop" : output.dop ? "dop" : "native",
         dsd_mode: output.dop ? "dop" : "native",
         max_dsd_rate: 512,
-        max_bits: output.max_bits,
+        max_bits: output.maxBits,
         signal_path: [
             {
                 method: hwIndex === 0 ? "i2s" : "usb",
