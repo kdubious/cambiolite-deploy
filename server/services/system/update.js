@@ -19,13 +19,18 @@ const getCurrentMotd = () => __awaiter(void 0, void 0, void 0, function* () {
     const rslt = yield shell_1.default.executeAsync(`cat ${config_1.default.paths.motd}`);
     return rslt;
 });
+// not needed if set up right:
+// GIT_SSH_COMMAND='ssh -i /opt/ssh.key'
 const getUpdateRequired = () => __awaiter(void 0, void 0, void 0, function* () {
-    const rslt = yield shell_1.default.executeAsyncWithError("GIT_SSH_COMMAND='ssh -i /opt/ssh.key' git -C /opt/www fetch --dry-run");
-    // GIT reports staus on STDERR!!!
-    return rslt.stderr !== "";
+    // const rslt = await Shell.executeAsyncWithError(
+    //   "git -C /opt/www fetch --dry-run"
+    // );
+    // // GIT reports status on STDERR!!!
+    // return rslt.stderr !== "";
+    return true;
 });
 const doUpdate = () => __awaiter(void 0, void 0, void 0, function* () {
-    const rslt = yield shell_1.default.executeAsync("GIT_SSH_COMMAND='ssh -i /opt/ssh.key' git -C /opt/www  pull");
+    const rslt = yield shell_1.default.executeAsync("git -C /opt/www pull");
     const updated = rslt.indexOf("Already up to date.") === -1;
     if (updated) {
         logging_1.default.log("* restarting node", logging_1.default.LoggingCategories.SERVICES);
