@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.toUpper = exports.toLower = exports.test1 = void 0;
 exports.test1 = (arg) => __awaiter(void 0, void 0, void 0, function* () {
     return arg.length;
 });

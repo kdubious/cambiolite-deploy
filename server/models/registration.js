@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Registration = void 0;
 class Registration {
     constructor(jsonData) {
         this.first_use = true;

@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Output = void 0;
 const logging_1 = __importDefault(require("../utils/logging"));
 class Output {
     constructor(jsonData) {
@@ -11,6 +12,7 @@ class Output {
         this.volume = false;
         this.mute = false;
         this.bufferDuration = 0.04;
+        this.max_bits = 32;
         this.strategy = 1 /* OCXO */;
         Object.assign(this, jsonData);
     }

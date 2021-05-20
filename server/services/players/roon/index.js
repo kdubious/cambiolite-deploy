@@ -73,6 +73,7 @@ const buildConfig = (output) => __awaiter(void 0, void 0, void 0, function* () {
         // dsd_mode: hwIndex === 0 ? "dop" : output.dop ? "dop" : "native",
         dsd_mode: output.dop ? "dop" : "native",
         max_dsd_rate: 512,
+        max_bits: output.max_bits,
         signal_path: [
             {
                 method: hwIndex === 0 ? "i2s" : "usb",
@@ -112,7 +113,7 @@ const service = {
     disable: () => __awaiter(void 0, void 0, void 0, function* () {
         const okStop = yield service.stop();
         const okDisable = yield system_v_1.default.Disable(service.name);
-        return (okStop && okDisable);
+        return okStop && okDisable;
     }),
     enable: () => __awaiter(void 0, void 0, void 0, function* () {
         return yield system_v_1.default.Enable(service.name, roon_service_config_1.default);
