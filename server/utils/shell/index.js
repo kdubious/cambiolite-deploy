@@ -94,7 +94,7 @@ function readFileAsync(path, options) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             try {
                 if (fs.existsSync(path)) {
-                    const file = (yield readFilePromise(path, options));
+                    const file = yield readFilePromise(path, options);
                     resolve(file);
                     return;
                 }
@@ -112,6 +112,10 @@ function spawn(command, args, options) {
             shell: true,
         };
     }
+    logging_1.default.log(spawn, logging_1.default.LoggingCategories.SYSTEM, true);
+    logging_1.default.log(command, logging_1.default.LoggingCategories.SYSTEM, true);
+    logging_1.default.log(args, logging_1.default.LoggingCategories.SYSTEM, true);
+    logging_1.default.log(options, logging_1.default.LoggingCategories.SYSTEM, true);
     return child_process.spawn(command, args, options);
 }
 const Shell = {
@@ -119,7 +123,7 @@ const Shell = {
     executeAsyncWithError,
     makeFileAsync,
     readFileAsync,
-    spawn
+    spawn,
 };
 exports.default = Shell;
 //# sourceMappingURL=index.js.map

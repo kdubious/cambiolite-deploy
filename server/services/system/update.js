@@ -30,14 +30,24 @@ const getUpdateRequired = () => __awaiter(void 0, void 0, void 0, function* () {
     return true;
 });
 const doUpdate = () => __awaiter(void 0, void 0, void 0, function* () {
+    let ts = Date.now();
+    logging_1.default.log(`*** doUpdate ${ts}`, logging_1.default.LoggingCategories.SERVICES);
     const rslt = yield shell_1.default.executeAsync("git -C /opt/www pull");
+    ts = Date.now();
+    logging_1.default.log(`*** doUpdate ${ts}`, logging_1.default.LoggingCategories.SERVICES);
     const updated = rslt.indexOf("Already up to date.") === -1;
     if (updated) {
         logging_1.default.log("* restarting node", logging_1.default.LoggingCategories.SERVICES);
-        shell_1.default.spawn("/etc/init.d/S42node", ["restart"], {
+        ts = Date.now();
+        logging_1.default.log(`*** doUpdate ${ts}`, logging_1.default.LoggingCategories.SERVICES);
+        shell_1.default.spawn("/opt/mp/restart_node", null, {
             detached: true,
             stdio: ["ignore"],
         }).unref();
+        // Shell.spawn("/etc/init.d/S42node", ["restart"], {
+        //   detached: true,
+        //   stdio: ["ignore"],
+        // }).unref();
         // can't exit here, need to return a response first
         // process.exit();
         logging_1.default.log("* POST: restarting node", logging_1.default.LoggingCategories.SERVICES);
