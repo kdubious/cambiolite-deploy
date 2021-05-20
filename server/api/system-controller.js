@@ -24,51 +24,54 @@ const logging_1 = __importDefault(require("../utils/logging"));
 var systemRouter = express_1.default.Router();
 // middleware that is specific to this router
 systemRouter.use(function timeLog(req, res, next) {
-    console.log('Time: ', Date.now());
+    console.log("Time: ", Date.now());
     next();
 });
-systemRouter.get('/config', function (req, res, next) {
+systemRouter.get("/config", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         errors_1.handleAsyncRouteErrors(res.send(yield config_1.default.get()));
     });
 });
-systemRouter.post('/config', function (req, res, next) {
+systemRouter.post("/config", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         errors_1.handleAsyncRouteErrors(res.send(yield config_1.default.set(req.body)));
     });
 });
-systemRouter.get('/debug', function (req, res, next) {
+systemRouter.get("/debug", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         notifications_1.default.notify("Hello World", "Greetings.");
         errors_1.handleAsyncRouteErrors(res.send(yield debug_1.default.all()));
     });
 });
-systemRouter.get('/motd', function (req, res, next) {
+systemRouter.get("/motd", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         errors_1.handleAsyncRouteErrors(res.send(yield update_1.default.getCurrentMotd()));
     });
 });
-systemRouter.get('/registration', function (req, res, next) {
+systemRouter.get("/registration", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         errors_1.handleAsyncRouteErrors(res.send(yield registration_2.default.getRegistrationAsync()));
     });
 });
-systemRouter.post('/registration', function (req, res, next) {
+systemRouter.post("/registration", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         errors_1.handleAsyncRouteErrors(res.send(yield registration_2.default.setRegistrationAsync(new registration_1.Registration(req.body))));
     });
 });
-systemRouter.get('/update', function (req, res, next) {
+systemRouter.get("/update", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         errors_1.handleAsyncRouteErrors(res.send(yield update_1.default.getUpdateRequired()));
     });
 });
-systemRouter.post('/update', function (req, res, next) {
+systemRouter.post("/update", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         logging_1.default.log("* BEGIN UPDATE", logging_1.default.LoggingCategories.SERVICES);
-        errors_1.handleAsyncRouteErrors(res.send(yield update_1.default.doUpdate()));
+        var updated = yield update_1.default.doUpdate();
+        errors_1.handleAsyncRouteErrors(res.send(updated));
         logging_1.default.log("* END UPDATE: post response", logging_1.default.LoggingCategories.SERVICES);
-        process.exit();
+        if (updated) {
+            process.exit();
+        }
         // Logging.log("* POST: restarting node", Logging.LoggingCategories.SERVICES);
     });
 });
