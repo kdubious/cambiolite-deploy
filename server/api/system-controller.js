@@ -70,7 +70,8 @@ systemRouter.post("/update", function (req, res, next) {
         errors_1.handleAsyncRouteErrors(res.send(updated));
         logging_1.default.log("* END UPDATE: post response", logging_1.default.LoggingCategories.SERVICES);
         if (updated) {
-            process.exit();
+            // not going to exit here, we'll restar in the backend
+            // process.exit();
         }
         // Logging.log("* POST: restarting node", Logging.LoggingCategories.SERVICES);
     });
