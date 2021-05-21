@@ -19,6 +19,7 @@ const shell_1 = __importDefault(require("../../utils/shell"));
 const db_1 = __importDefault(require("../db"));
 const notifications_1 = __importDefault(require("../notifications"));
 const roon_1 = __importDefault(require("../players/roon"));
+const shairport_sync_1 = __importDefault(require("../players/shairport-sync"));
 const getSoundCards = () => __awaiter(void 0, void 0, void 0, function* () {
     const grep = `cat /proc/asound/cards | grep -e '^ [0-9]' | sed 's/^ //' | sed 's/ \\[.* - //'`;
     logging_1.default.log(grep, logging_1.default.LoggingCategories.SYSTEM);
@@ -38,7 +39,7 @@ const getSoundCards = () => __awaiter(void 0, void 0, void 0, function* () {
 });
 const hasUsbCard = () => __awaiter(void 0, void 0, void 0, function* () {
     const aplay = yield shell_1.default.executeAsync("aplay -l");
-    return (aplay.indexOf("card 1:") > -1);
+    return aplay.indexOf("card 1:") > -1;
 });
 const getAudioConfig = () => __awaiter(void 0, void 0, void 0, function* () {
     const audioConf = yield db_1.default.get("audio:output");
@@ -59,7 +60,7 @@ const setAudioConfig = (output) => __awaiter(void 0, void 0, void 0, function* (
     multi = db_1.default.multiSet("audio:output", JSON.stringify(output), multi);
     logging_1.default.log(output, logging_1.default.LoggingCategories.SERVICES);
     const r = (restart) => __awaiter(void 0, void 0, void 0, function* () {
-        return roon_1.default.saveConfig(output).then((roonOk) => {
+        const audio_roon = roon_1.default.saveConfig(output).then((roonOk) => {
             if (!roonOk) {
                 return false;
             }
@@ -68,6 +69,18 @@ const setAudioConfig = (output) => __awaiter(void 0, void 0, void 0, function* (
             }
             return true;
         });
+        const audio_shairport = shairport_sync_1.default
+            .saveConfig(output)
+            .then((shairportOk) => {
+            if (!shairportOk) {
+                return false;
+            }
+            if (restart) {
+                return shairport_sync_1.default.service.restart();
+            }
+            return true;
+        });
+        return Promise.all([audio_roon, audio_shairport]);
     });
     if (r(true)) {
         const ok = yield db_1.default.multiExecAsync(multi);
