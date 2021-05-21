@@ -82,7 +82,8 @@ const setAudioConfig = (output) => __awaiter(void 0, void 0, void 0, function* (
         });
         return Promise.all([audio_roon, audio_shairport]);
     });
-    if (r(true)) {
+    const rslt = yield r(true);
+    if (rslt[0] && rslt[1]) {
         const ok = yield db_1.default.multiExecAsync(multi);
         logging_1.default.log(ok, logging_1.default.LoggingCategories.SERVICES);
         if (ok) {
