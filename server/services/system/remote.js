@@ -26,8 +26,11 @@ const getRemotePID = () => __awaiter(void 0, void 0, void 0, function* () {
         return "";
     }
 });
-const enableRemoteSSH = () => {
+const enableRemoteSSH = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        if ((yield getRemotePID()) !== "") {
+            return true;
+        }
         logging_1.default.log("[REMOTE] Begin enable", logging_1.default.LoggingCategories.SYSTEM);
         const child = shell_1.default.spawn("/opt/mp/mpssh", [], {
             detached: true,
@@ -40,7 +43,7 @@ const enableRemoteSSH = () => {
         logging_1.default.log("[REMOTE] FAIL", logging_1.default.LoggingCategories.SYSTEM);
         return false;
     }
-};
+});
 const disableRemoteSSH = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         logging_1.default.log("[REMOTE] Begin enable", logging_1.default.LoggingCategories.SYSTEM);
