@@ -18,6 +18,7 @@ const notifications_1 = __importDefault(require("../services/notifications"));
 const config_1 = __importDefault(require("../services/system/config"));
 const debug_1 = __importDefault(require("../services/system/debug"));
 const registration_2 = __importDefault(require("../services/system/registration"));
+const remote_1 = __importDefault(require("../services/system/remote"));
 const update_1 = __importDefault(require("../services/system/update"));
 const errors_1 = require("../utils/errors");
 const logging_1 = __importDefault(require("../utils/logging"));
@@ -74,6 +75,14 @@ systemRouter.post("/update", function (req, res, next) {
             // process.exit();
         }
         // Logging.log("* POST: restarting node", Logging.LoggingCategories.SERVICES);
+    });
+});
+systemRouter.post("/remote", function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        logging_1.default.log("* BEGIN REMOTE", logging_1.default.LoggingCategories.SERVICES);
+        var rslt = remote_1.default.enableRemoteSSH();
+        errors_1.handleAsyncRouteErrors(res.send(rslt));
+        logging_1.default.log("* END REMOTE: post response", logging_1.default.LoggingCategories.SERVICES);
     });
 });
 exports.default = systemRouter;
