@@ -45,7 +45,7 @@ const doUpdate = () => __awaiter(void 0, void 0, void 0, function* () {
         //   shell: true,
         //   stdio: ["ignore"],
         // });
-        const sub = shell_1.default.spawn("/bin/sh/", ["/etc/init.d/S42restart"], {
+        const sub = shell_1.default.spawn("/opt/mp/restart_node", [], {
             detached: true,
             shell: true,
             stdio: ["ignore"],
