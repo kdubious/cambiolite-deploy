@@ -8,13 +8,10 @@ const shell_1 = __importDefault(require("../../utils/shell"));
 const enableRemoteSSH = () => {
     try {
         logging_1.default.log("[REMOTE] Begin enable", logging_1.default.LoggingCategories.SYSTEM);
-        //const child = Shell.spawn("/opt/mp/mpssh", [], {
-        const child = shell_1.default.spawn("ssh", ["-M 10001 -N -R 10000:localhost:22 -p 22000 mpserver"], {
+        const child = shell_1.default.spawn("/opt/mp/mpssh", [], {
             detached: true,
-            shell: false,
-            stdio: ["ignore"],
-        });
-        child.unref();
+            stdio: "ignore",
+        }).unref();
         logging_1.default.log("[REMOTE] Complete enable", logging_1.default.LoggingCategories.SYSTEM);
         return true;
     }
