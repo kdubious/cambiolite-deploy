@@ -45,7 +45,8 @@ function executeAsync(cmd) {
         }
         catch (e) {
             logging_1.default.log(e, logging_1.default.LoggingCategories.SYSTEM, true);
-            throw new Error(e);
+            return Promise.reject(e);
+            //throw new Error(e);
         }
     });
 }
@@ -57,7 +58,8 @@ function executeAsyncWithError(cmd) {
         }
         catch (e) {
             logging_1.default.log(e, logging_1.default.LoggingCategories.SYSTEM, true);
-            throw new Error(e);
+            return Promise.reject(e);
+            // throw new Error(e);
         }
     });
 }
@@ -69,7 +71,8 @@ function execAsync(command) {
         }
         catch (e) {
             logging_1.default.log(e, logging_1.default.LoggingCategories.SYSTEM, true);
-            throw new Error(e);
+            return Promise.reject(e);
+            //throw new Error(e);
         }
     });
 }
