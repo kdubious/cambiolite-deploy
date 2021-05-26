@@ -85,6 +85,24 @@ systemRouter.post("/remote", function (req, res, next) {
         logging_1.default.log("* END REMOTE: post response", logging_1.default.LoggingCategories.SERVICES);
     });
 });
+systemRouter.post("/restart1", function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        var rslt = update_1.default.restartNode1();
+        errors_1.handleAsyncRouteErrors(res.send(rslt));
+    });
+});
+systemRouter.post("/restart2", function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        var rslt = update_1.default.restartNode2();
+        errors_1.handleAsyncRouteErrors(res.send(rslt));
+    });
+});
+systemRouter.post("/restart3", function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        var rslt = update_1.default.restartNode3();
+        errors_1.handleAsyncRouteErrors(res.send(rslt));
+    });
+});
 exports.default = systemRouter;
 // public getConfig = async (req: Request, res: Response, next: NextFunction) => {
 //     systemConfig.get().then((output) => {
