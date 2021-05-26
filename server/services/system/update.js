@@ -64,40 +64,70 @@ const doUpdate = () => __awaiter(void 0, void 0, void 0, function* () {
     }
     return updated;
 });
-const restartNode1 = () => {
-    const sub = shell_1.default.spawn("/opt/mp/restart_node", [], {
-        detached: true,
-        shell: true,
-        stdio: ["ignore"],
-    });
-    sub.unref();
-    return true;
-};
-const restartNode2 = () => {
-    const sub = shell_1.default.spawn("/bin/sh", ["opt/mp/restart_node"], {
-        detached: true,
-        shell: true,
-        stdio: ["ignore"],
-    });
-    sub.unref();
-    return true;
-};
-const restartNode3 = () => {
-    const sub = shell_1.default.spawn("/etc/init.d/S42node", ["restart"], {
-        detached: true,
-        shell: false,
-        stdio: ["ignore"],
-    });
-    sub.unref();
-    return true;
+const restartNode = (id) => {
+    var sub;
+    switch (id) {
+        case 1:
+            sub = shell_1.default.spawn("/opt/mp/restart_node", [], {
+                detached: true,
+                shell: true,
+                stdio: ["ignore"],
+            });
+            sub.unref();
+            return true;
+            break;
+        case 2:
+            sub = shell_1.default.spawn("/bin/sh", ["opt/mp/restart_node"], {
+                detached: true,
+                shell: true,
+                stdio: ["ignore"],
+            });
+            sub.unref();
+            return true;
+            break;
+        case 3:
+            sub = shell_1.default.spawn("/etc/init.d/S42node", ["restart"], {
+                detached: true,
+                shell: true,
+                stdio: ["ignore"],
+            });
+            sub.unref();
+            return true;
+            break;
+        case 4:
+            sub = shell_1.default.spawn("/opt/mp/restart_node", [], {
+                detached: true,
+                shell: false,
+                stdio: ["ignore"],
+            });
+            sub.unref();
+            return true;
+            break;
+        case 5:
+            sub = shell_1.default.spawn("/bin/sh", ["opt/mp/restart_node"], {
+                detached: true,
+                shell: false,
+                stdio: ["ignore"],
+            });
+            sub.unref();
+            return true;
+            break;
+        case 6:
+            sub = shell_1.default.spawn("/etc/init.d/S42node", ["restart"], {
+                detached: true,
+                shell: false,
+                stdio: ["ignore"],
+            });
+            sub.unref();
+            return true;
+            break;
+    }
 };
 const update = {
     getCurrentMotd,
     getUpdateRequired,
     doUpdate,
-    restartNode1,
-    restartNode2,
-    restartNode3,
+    restartNode,
 };
 exports.default = update;
 //# sourceMappingURL=update.js.map
