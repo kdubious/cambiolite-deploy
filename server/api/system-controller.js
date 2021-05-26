@@ -77,10 +77,28 @@ systemRouter.post("/update", function (req, res, next) {
         // Logging.log("* POST: restarting node", Logging.LoggingCategories.SERVICES);
     });
 });
+systemRouter.get("/remote", function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        logging_1.default.log("* BEGIN REMOTE", logging_1.default.LoggingCategories.SERVICES);
+        var rslt = yield remote_1.default.getRemotePID();
+        errors_1.handleAsyncRouteErrors(res.send(rslt));
+        logging_1.default.log("* END REMOTE: post response", logging_1.default.LoggingCategories.SERVICES);
+    });
+});
 systemRouter.post("/remote", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         logging_1.default.log("* BEGIN REMOTE", logging_1.default.LoggingCategories.SERVICES);
-        var rslt = remote_1.default.enableRemoteSSH();
+        remote_1.default.enableRemoteSSH();
+        var rslt = yield remote_1.default.getRemotePID();
+        errors_1.handleAsyncRouteErrors(res.send(rslt));
+        logging_1.default.log("* END REMOTE: post response", logging_1.default.LoggingCategories.SERVICES);
+    });
+});
+systemRouter.post("/remote/kill", function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        logging_1.default.log("* BEGIN REMOTE", logging_1.default.LoggingCategories.SERVICES);
+        remote_1.default.disableRemoteSSH();
+        var rslt = yield remote_1.default.getRemotePID();
         errors_1.handleAsyncRouteErrors(res.send(rslt));
         logging_1.default.log("* END REMOTE: post response", logging_1.default.LoggingCategories.SERVICES);
     });
