@@ -16,9 +16,15 @@ const logging_1 = __importDefault(require("../../utils/logging"));
 const shell_1 = __importDefault(require("../../utils/shell"));
 const getRemotePID = () => __awaiter(void 0, void 0, void 0, function* () {
     logging_1.default.log("[REMOTE] Get PID", logging_1.default.LoggingCategories.SYSTEM);
-    const child = yield shell_1.default.executeAsync("pidof ssh");
-    logging_1.default.log("[REMOTE] Complete Get PID", logging_1.default.LoggingCategories.SYSTEM);
-    return child;
+    try {
+        const child = yield shell_1.default.executeAsync("pidof ssh");
+        logging_1.default.log("[REMOTE] Complete Get PID", logging_1.default.LoggingCategories.SYSTEM);
+        return child;
+    }
+    catch (error) {
+        logging_1.default.log("[REMOTE] SSH is not running", logging_1.default.LoggingCategories.SYSTEM);
+        return "";
+    }
 });
 const enableRemoteSSH = () => {
     try {
