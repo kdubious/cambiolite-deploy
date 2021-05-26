@@ -40,21 +40,10 @@ const doUpdate = () => __awaiter(void 0, void 0, void 0, function* () {
         logging_1.default.log("* restarting node", logging_1.default.LoggingCategories.SERVICES);
         ts = Date.now();
         logging_1.default.log(`*** doUpdate ${ts}`, logging_1.default.LoggingCategories.SERVICES);
-        // const sub = Shell.spawn("/opt/mp/restart_node", null, {
-        //   detached: true,
-        //   shell: true,
-        //   stdio: ["ignore"],
-        // });
         const sub = shell_1.default.spawn("/opt/mp/restart_node", [], {
             detached: true,
-            shell: true,
-            stdio: ["ignore"],
-        });
-        sub.unref();
-        // Shell.spawn("/etc/init.d/S42node", ["restart"], {
-        //   detached: true,
-        //   stdio: ["ignore"],
-        // }).unref();
+            stdio: "ignore",
+        }).unref();
         // can't exit here, need to return a response first
         // process.exit();
         logging_1.default.log("* POST: restarting node", logging_1.default.LoggingCategories.SERVICES);
