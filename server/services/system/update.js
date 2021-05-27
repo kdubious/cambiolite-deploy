@@ -18,7 +18,9 @@ const shell_1 = __importDefault(require("../../utils/shell"));
 const getCurrentMotd = () => __awaiter(void 0, void 0, void 0, function* () {
     let rslt = yield shell_1.default.executeAsync(`cat ${config_1.default.paths.motd}`);
     rslt += "\n";
-    rslt += "COMMIT: " + (yield shell_1.default.executeAsync(`git rev-parse --short HEAD`));
+    rslt +=
+        "COMMIT: " +
+            (yield shell_1.default.executeAsync(`git rev-parse HEAD`)).substring(0, 7);
     return rslt;
 });
 // not needed if set up right:

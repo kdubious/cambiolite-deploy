@@ -87,14 +87,14 @@ systemRouter.get("/remote", function (req, res, next) {
 systemRouter.post("/remote", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         logging_1.default.log("* BEGIN REMOTE", logging_1.default.LoggingCategories.SERVICES);
-        errors_1.handleAsyncRouteErrors(res.send(remote_1.default.enableRemoteSSH()));
+        errors_1.handleAsyncRouteErrors(res.send(yield remote_1.default.enableRemoteSSH()));
         logging_1.default.log("* END REMOTE: post response", logging_1.default.LoggingCategories.SERVICES);
     });
 });
 systemRouter.post("/remote/kill", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         logging_1.default.log("* BEGIN REMOTE", logging_1.default.LoggingCategories.SERVICES);
-        errors_1.handleAsyncRouteErrors(res.send(remote_1.default.disableRemoteSSH()));
+        errors_1.handleAsyncRouteErrors(res.send(yield remote_1.default.disableRemoteSSH()));
         logging_1.default.log("* END REMOTE: post response", logging_1.default.LoggingCategories.SERVICES);
     });
 });
