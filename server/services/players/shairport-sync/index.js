@@ -59,7 +59,7 @@ const buildConfig = (output) => __awaiter(void 0, void 0, void 0, function* () {
     const hwIndex = parseInt(output.output.replace("hw:", "").substring(0, 1), 10);
     const config = `general =
     {
-        name = "A Cappella";
+        //name = "A Cappella";
         output_backend = "alsa";
         mdns_backend = "avahi";
     };
