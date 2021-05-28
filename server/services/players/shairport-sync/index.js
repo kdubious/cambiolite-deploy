@@ -59,15 +59,16 @@ const buildConfig = (output) => __awaiter(void 0, void 0, void 0, function* () {
     const hwIndex = parseInt(output.output.replace("hw:", "").substring(0, 1), 10);
     const config = `general =
     {
-        //name = "A Cappella";
+        name = "A Cappella";
         output_backend = "alsa";
         mdns_backend = "avahi";
+        interpolation = "basic";
     };
     sessioncontrol =
     {
       run_this_before_play_begins = "/opt/mp/start_shairport-sync"; // make sure the application has executable permission. If it's a script, include the shebang (#!/bin/...) on the first line
       // run_this_after_play_ends = "/full/path/to/application and args"; // make sure the application has executable permission. If it's a script, include the shebang (#!/bin/...) on the first line
-      wait_for_completion = "no"; // set to "yes" to get Shairport Sync to wait until the "run_this..." applications have terminated before continuing
+      wait_for_completion = "yes"; // set to "yes" to get Shairport Sync to wait until the "run_this..." applications have terminated before continuing
       allow_session_interruption = "no"; // set to "yes" to allow another device to interrupt Shairport Sync while it's playing from an existing audio source
       session_timeout = 60; // wait for this number of seconds after a source disappears before terminating the session and becoming available again.
     };
@@ -77,7 +78,7 @@ const buildConfig = (output) => __awaiter(void 0, void 0, void 0, function* () {
       // mixer_control_name = "PCM"; // the name of the mixer to use to adjust output volume. If not specified, volume in adjusted in software.
       // mixer_device = "default"; // the mixer_device default is whatever the output_device is. Normally you wouldn't have to use this.
       // output_rate = 44100; // can be 44100, 88200, 176400 or 352800, but the device must have the capability.
-      // output_format = "S16"; // can be "U8", "S8", "S16", "S24", "S24_3LE", "S24_3BE" or "S32", but the device must have the capability. Except where stated using (*LE or *BE), endianness matches that of the processor.
+      output_format = "auto"; // can be "U8", "S8", "S16", "S24", "S24_3LE", "S24_3BE" or "S32", but the device must have the capability. Except where stated using (*LE or *BE), endianness matches that of the processor.
     };
     dsp =
     {
@@ -86,9 +87,9 @@ const buildConfig = (output) => __awaiter(void 0, void 0, void 0, function* () {
     };
     metadata =
     {
-      enabled = "yes"; // set this to yes to get Shairport Sync to solicit metadata from the source and to pass it on via a pipe
-      include_cover_art = "yes"; // set to "yes" to get Shairport Sync to solicit cover art from the source and pass it via the pipe. You must also set "enabled" to "yes".
-      pipe_name = "/opt/shairport-sync/shairport-sync-metadata";
+      //enabled = "yes"; // set this to yes to get Shairport Sync to solicit metadata from the source and to pass it on via a pipe
+      //include_cover_art = "yes"; // set to "yes" to get Shairport Sync to solicit cover art from the source and pass it via the pipe. You must also set "enabled" to "yes".
+      //pipe_name = "/opt/shairport-sync/shairport-sync-metadata";
       // pipe_timeout = 5000; // wait for this number of milliseconds for a blocked pipe to unblock before giving up
       // socket_address = "226.0.0.1"; // if set to a host name or IP address, UDP packets containing metadata will be sent to this address. May be a multicast address. "socket-port" must be non-zero and "enabled" must be set to yes"
       // socket_port = 5555; // if socket_address is set, the port to send UDP packets to
