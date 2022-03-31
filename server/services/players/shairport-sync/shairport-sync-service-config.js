@@ -7,9 +7,10 @@ OPTIONS="-d -c /opt/shairport-sync/shairport-sync.conf"
 
 case "$1" in
     start)
-	printf "Starting shairport-sync: "
-	start-stop-daemon -S -q --exec /usr/bin/shairport-sync -- $OPTIONS
-	[ $? = 0 ] && echo "OK" || echo "FAIL"
+	#printf "Starting shairport-sync: "
+	#start-stop-daemon -S -q --exec /usr/bin/shairport-sync -- $OPTIONS
+	#[ $? = 0 ] && echo "OK" || echo "FAIL"
+  echo "DISABLED"
 	;;
     stop)
 	printf "Stopping shairport-sync: "

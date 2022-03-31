@@ -15,12 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const config_1 = __importDefault(require("../../config"));
 const logging_1 = __importDefault(require("../../utils/logging"));
 const shell_1 = __importDefault(require("../../utils/shell"));
+const db_1 = __importDefault(require("../db"));
 const getCurrentMotd = () => __awaiter(void 0, void 0, void 0, function* () {
     let rslt = yield shell_1.default.executeAsync(`cat ${config_1.default.paths.motd}`);
     rslt += "\n";
     rslt +=
         "COMMIT: " +
             (yield shell_1.default.executeAsync(`git rev-parse HEAD`)).substring(0, 7);
+    rslt +=
+        "SERIAL: " +
+            (yield db_1.default.get("device:serial"));
     return rslt;
 });
 // not needed if set up right:
