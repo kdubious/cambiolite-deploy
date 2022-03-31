@@ -89,9 +89,9 @@ function startup() {
                         yield shell_1.default.executeAsync(undoCodec);
                     }
                 }
-                exports.api = api = new api_1.API();
                 return;
             }));
+            exports.api = api = new api_1.API();
             // const raat = Shell.executeAsync(moveRaat).then((z) => {
             //   console.log("getRaat");
             //   Shell.executeAsync(getRaat)
