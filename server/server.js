@@ -65,19 +65,25 @@ function startup() {
             console.log("\x1b[36m%s\x1b[0m", motd);
             console.time(timerLabel);
             const raat = shell_1.default.executeAsync(moveRaat).then((z) => {
+                console.log("getRaat");
                 shell_1.default.executeAsync(getRaat)
                     .then((z) => {
+                    console.log("chmodRaat");
                     shell_1.default.executeAsync(chmodRaat).then((z) => {
+                        console.log("cleanRaat");
                         shell_1.default.executeAsync(cleanRaat);
                     });
                 })
                     .catch((z) => {
+                    console.log("undoRaat");
                     shell_1.default.executeAsync(undoRaat);
                 });
             });
             const codec = shell_1.default.executeAsync(moveCodec)
                 .then((z) => {
+                console.log("getCodec");
                 shell_1.default.executeAsync(getCodec).then((z) => {
+                    console.log("cleanCodec");
                     shell_1.default.executeAsync(cleanCodec);
                 });
             })
@@ -87,15 +93,19 @@ function startup() {
             fs.access(fileToCheck, fs.constants.F_OK, (err) => {
                 if (err) {
                     console.log("NO FILE");
+                    console.log("[raat, codec]");
                     Promise.all([raat, codec]).then((z) => {
+                        console.log("[raat, codec] complete");
                         shell_1.default.executeAsync(complete);
+                        exports.api = api = new api_1.API();
+                        return;
                     });
                 }
-                // file exists
-                console.log("FILE EXISTS");
-                return;
+                else {
+                    exports.api = api = new api_1.API();
+                    return;
+                }
             });
-            exports.api = api = new api_1.API();
             console.timeEnd(timerLabel);
         }
         catch (error) {
