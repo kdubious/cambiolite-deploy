@@ -10,7 +10,7 @@ let io;
 let notify_socket;
 const init = (server) => {
     if (!initialized) {
-        io = socket_io_1.default(server);
+        io = (0, socket_io_1.default)(server);
         notify_socket = io.of("/notify");
         notify_socket.on("connection", (socket) => {
             logging_1.default.log(`Notify channel connected from client: ${socket.handshake.address}`, logging_1.default.LoggingCategories.SOCKET);

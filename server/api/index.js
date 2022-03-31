@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -14,7 +18,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -77,7 +81,7 @@ class API {
         this.sockets();
     }
     createApp() {
-        this.app = express_1.default();
+        this.app = (0, express_1.default)();
         logging_1.default.log("createApp()", this.category);
     }
     initializeMiddlewares() {
@@ -87,7 +91,7 @@ class API {
         this.app.use(bodyParser.urlencoded({ extended: false }));
         // static paths
         // CORS for debugging, at least
-        this.app.use(cors_1.default(this.corsOptions));
+        this.app.use((0, cors_1.default)(this.corsOptions));
         logging_1.default.log("     initializeMiddlewares()", this.category);
     }
     initializeRoutes() {
@@ -112,7 +116,7 @@ class API {
         logging_1.default.log("     initializeErrorHandling()", this.category);
     }
     createAppServer() {
-        this.server = http_1.createServer(this.app);
+        this.server = (0, http_1.createServer)(this.app);
         logging_1.default.log("     createServer()", this.category);
     }
     listen() {

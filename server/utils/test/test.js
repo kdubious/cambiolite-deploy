@@ -10,13 +10,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.toUpper = exports.toLower = exports.test1 = void 0;
-exports.test1 = (arg) => __awaiter(void 0, void 0, void 0, function* () {
+const test1 = (arg) => __awaiter(void 0, void 0, void 0, function* () {
     return arg.length;
 });
-exports.toLower = (arg) => __awaiter(void 0, void 0, void 0, function* () {
+exports.test1 = test1;
+const toLower = (arg) => __awaiter(void 0, void 0, void 0, function* () {
     return arg.toLowerCase();
 });
-exports.toUpper = (arg) => __awaiter(void 0, void 0, void 0, function* () {
+exports.toLower = toLower;
+const toUpper = (arg) => __awaiter(void 0, void 0, void 0, function* () {
     return arg.toUpperCase();
 });
+exports.toUpper = toUpper;
 //# sourceMappingURL=test.js.map

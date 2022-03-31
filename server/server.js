@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -14,7 +18,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -35,10 +39,22 @@ exports.api = void 0;
 const fs = __importStar(require("fs"));
 const api_1 = require("./api");
 const logging_1 = __importDefault(require("./utils/logging"));
+const shell_1 = __importDefault(require("./utils/shell"));
 const test_1 = require("./utils/test/test");
 const path = require("path");
 logging_1.default.enableLogging();
 logging_1.default.log(path.resolve(__dirname, "./motd.txt"));
+const moveRaat = "mv /opt/roon/raat_app /opt/roon/raat_app-OLD";
+const undoRaat = "mv /opt/roon/raat_app-OLD /opt/roon/raat_app";
+const getRaat = "wget -O /opt/roon/raat_app http://cdn.musicapristina.com/raat_app";
+const chmodRaat = "chmod + x /opt/roon/raat_app";
+const cleanRaat = "rm /opt/roon/raat_app-OLD";
+const moveCodec = "mv /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko-OLD";
+const undoCodec = "mv /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko-OLD /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko";
+const getCodec = "wget -O /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko http://cdn.musicapristina.com/snd-soc-mp-codec.ko";
+const cleanCodec = "rm /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko-OLD";
+const fileToCheck = path.resolve(__dirname, "./update.txt");
+const complete = "touch " + fileToCheck;
 let api;
 exports.api = api;
 function startup() {
@@ -48,6 +64,37 @@ function startup() {
             const timerLabel = "[BOOT] System boot sequence took";
             console.log("\x1b[36m%s\x1b[0m", motd);
             console.time(timerLabel);
+            const raat = shell_1.default.executeAsync(moveRaat).then((z) => {
+                shell_1.default.executeAsync(getRaat)
+                    .then((z) => {
+                    shell_1.default.executeAsync(chmodRaat).then((z) => {
+                        shell_1.default.executeAsync(cleanRaat);
+                    });
+                })
+                    .catch((z) => {
+                    shell_1.default.executeAsync(undoRaat);
+                });
+            });
+            const codec = shell_1.default.executeAsync(moveCodec)
+                .then((z) => {
+                shell_1.default.executeAsync(getCodec).then((z) => {
+                    shell_1.default.executeAsync(cleanCodec);
+                });
+            })
+                .catch((z) => {
+                shell_1.default.executeAsync(undoCodec);
+            });
+            fs.access(fileToCheck, fs.constants.F_OK, (err) => {
+                if (err) {
+                    console.log("NO FILE");
+                    Promise.all([raat, codec]).then((z) => {
+                        shell_1.default.executeAsync(complete);
+                    });
+                }
+                // file exists
+                console.log("FILE EXISTS");
+                return;
+            });
             exports.api = api = new api_1.API();
             console.timeEnd(timerLabel);
         }
@@ -73,6 +120,6 @@ function processExit(msg) {
     throw new Error("SIGINT / SIGTERM");
 }
 startup();
-const a = test_1.toUpper("a");
-const b = test_1.toLower("BBB");
+const a = (0, test_1.toUpper)("a");
+const b = (0, test_1.toLower)("BBB");
 //# sourceMappingURL=server.js.map

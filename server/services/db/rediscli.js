@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const redis_1 = __importDefault(require("redis"));
 const util_1 = require("util");
 const client = redis_1.default.createClient();
-const getAsync = util_1.promisify(client.get).bind(client);
-const setAsync = util_1.promisify(client.set).bind(client);
+const getAsync = (0, util_1.promisify)(client.get).bind(client);
+const setAsync = (0, util_1.promisify)(client.set).bind(client);
 const redis_cli = {
     getAsync,
     setAsync,

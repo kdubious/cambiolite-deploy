@@ -24,22 +24,22 @@ audioRouter.use(function timeLog(req, res, next) {
 });
 audioRouter.get('/config', function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        errors_1.handleAsyncRouteErrors(res.send(yield audio_1.default.getAudioConfig()));
+        (0, errors_1.handleAsyncRouteErrors)(res.send(yield audio_1.default.getAudioConfig()));
     });
 });
 audioRouter.post('/config', function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        errors_1.handleAsyncRouteErrors(res.send(yield audio_1.default.setAudioConfig(new output_1.Output(req.body))));
+        (0, errors_1.handleAsyncRouteErrors)(res.send(yield audio_1.default.setAudioConfig(new output_1.Output(req.body))));
     });
 });
 audioRouter.get('/outputs', function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        errors_1.handleAsyncRouteErrors(getSoundCards(req, res, next));
+        (0, errors_1.handleAsyncRouteErrors)(getSoundCards(req, res, next));
     });
 });
 audioRouter.get('/strategies', function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        errors_1.handleAsyncRouteErrors(getSoundCards(req, res, next));
+        (0, errors_1.handleAsyncRouteErrors)(getSoundCards(req, res, next));
     });
 });
 const getSoundCards = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

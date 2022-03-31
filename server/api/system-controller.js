@@ -30,45 +30,45 @@ systemRouter.use(function timeLog(req, res, next) {
 });
 systemRouter.get("/config", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        errors_1.handleAsyncRouteErrors(res.send(yield config_1.default.get()));
+        (0, errors_1.handleAsyncRouteErrors)(res.send(yield config_1.default.get()));
     });
 });
 systemRouter.post("/config", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        errors_1.handleAsyncRouteErrors(res.send(yield config_1.default.set(req.body)));
+        (0, errors_1.handleAsyncRouteErrors)(res.send(yield config_1.default.set(req.body)));
     });
 });
 systemRouter.get("/debug", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         notifications_1.default.notify("Hello World", "Greetings.");
-        errors_1.handleAsyncRouteErrors(res.send(yield debug_1.default.all()));
+        (0, errors_1.handleAsyncRouteErrors)(res.send(yield debug_1.default.all()));
     });
 });
 systemRouter.get("/motd", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        errors_1.handleAsyncRouteErrors(res.send(yield update_1.default.getCurrentMotd()));
+        (0, errors_1.handleAsyncRouteErrors)(res.send(yield update_1.default.getCurrentMotd()));
     });
 });
 systemRouter.get("/registration", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        errors_1.handleAsyncRouteErrors(res.send(yield registration_2.default.getRegistrationAsync()));
+        (0, errors_1.handleAsyncRouteErrors)(res.send(yield registration_2.default.getRegistrationAsync()));
     });
 });
 systemRouter.post("/registration", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        errors_1.handleAsyncRouteErrors(res.send(yield registration_2.default.setRegistrationAsync(new registration_1.Registration(req.body))));
+        (0, errors_1.handleAsyncRouteErrors)(res.send(yield registration_2.default.setRegistrationAsync(new registration_1.Registration(req.body))));
     });
 });
 systemRouter.get("/update", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        errors_1.handleAsyncRouteErrors(res.send(yield update_1.default.getUpdateRequired()));
+        (0, errors_1.handleAsyncRouteErrors)(res.send(yield update_1.default.getUpdateRequired()));
     });
 });
 systemRouter.post("/update", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         logging_1.default.log("* BEGIN UPDATE", logging_1.default.LoggingCategories.SERVICES);
         var updated = yield update_1.default.doUpdate();
-        errors_1.handleAsyncRouteErrors(res.send(updated));
+        (0, errors_1.handleAsyncRouteErrors)(res.send(updated));
         logging_1.default.log("* END UPDATE: post response", logging_1.default.LoggingCategories.SERVICES);
         if (updated) {
             // not going to exit here, we'll restar in the backend
@@ -80,21 +80,21 @@ systemRouter.post("/update", function (req, res, next) {
 systemRouter.get("/remote", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         logging_1.default.log("* BEGIN REMOTE", logging_1.default.LoggingCategories.SERVICES);
-        errors_1.handleAsyncRouteErrors(res.send(yield remote_1.default.getRemotePID()));
+        (0, errors_1.handleAsyncRouteErrors)(res.send(yield remote_1.default.getRemotePID()));
         logging_1.default.log("* END REMOTE: post response", logging_1.default.LoggingCategories.SERVICES);
     });
 });
 systemRouter.post("/remote", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         logging_1.default.log("* BEGIN REMOTE", logging_1.default.LoggingCategories.SERVICES);
-        errors_1.handleAsyncRouteErrors(res.send(yield remote_1.default.enableRemoteSSH()));
+        (0, errors_1.handleAsyncRouteErrors)(res.send(yield remote_1.default.enableRemoteSSH()));
         logging_1.default.log("* END REMOTE: post response", logging_1.default.LoggingCategories.SERVICES);
     });
 });
 systemRouter.post("/remote/kill", function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         logging_1.default.log("* BEGIN REMOTE", logging_1.default.LoggingCategories.SERVICES);
-        errors_1.handleAsyncRouteErrors(res.send(yield remote_1.default.disableRemoteSSH()));
+        (0, errors_1.handleAsyncRouteErrors)(res.send(yield remote_1.default.disableRemoteSSH()));
         logging_1.default.log("* END REMOTE: post response", logging_1.default.LoggingCategories.SERVICES);
     });
 });
