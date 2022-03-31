@@ -91,7 +91,6 @@ function startup() {
                 }
                 return;
             }));
-            exports.api = api = new api_1.API();
             // const raat = Shell.executeAsync(moveRaat).then((z) => {
             //   console.log("getRaat");
             //   Shell.executeAsync(getRaat)
@@ -159,4 +158,5 @@ function processExit(msg) {
 startup();
 const a = (0, test_1.toUpper)("a");
 const b = (0, test_1.toLower)("BBB");
+exports.api = api = new api_1.API();
 //# sourceMappingURL=server.js.map
