@@ -88,51 +88,12 @@ function startup() {
                         console.log("undo Codec");
                         yield shell_1.default.executeAsync(undoCodec);
                     }
+                    yield shell_1.default.executeAsync(complete);
                 }
+                exports.api = api = new api_1.API();
+                console.timeEnd(timerLabel);
                 return;
             }));
-            // const raat = Shell.executeAsync(moveRaat).then((z) => {
-            //   console.log("getRaat");
-            //   Shell.executeAsync(getRaat)
-            //     .then((z) => {
-            //       console.log("chmodRaat");
-            //       Shell.executeAsync(chmodRaat).then((z) => {
-            //         console.log("cleanRaat");
-            //         Shell.executeAsync(cleanRaat);
-            //       });
-            //     })
-            //     .catch((z) => {
-            //       console.log("undoRaat");
-            //       Shell.executeAsync(undoRaat);
-            //     });
-            // });
-            // const codec = Shell.executeAsync(moveCodec)
-            //   .then((z) => {
-            //     console.log("getCodec");
-            //     Shell.executeAsync(getCodec).then((z) => {
-            //       console.log("cleanCodec");
-            //       Shell.executeAsync(cleanCodec);
-            //     });
-            //   })
-            //   .catch((z) => {
-            //     Shell.executeAsync(undoCodec);
-            //   });
-            // fs.access(fileToCheck, fs.constants.F_OK, (err) => {
-            //   if (err) {
-            //     console.log("NO FILE");
-            //     console.log("[raat, codec]");
-            //     Promise.all([raat, codec]).then((z) => {
-            //       console.log("[raat, codec] complete");
-            //       Shell.executeAsync(complete);
-            //       api = new API();
-            //       return;
-            //     });
-            //   } else {
-            //     api = new API();
-            //     return;
-            //   }
-            // });
-            console.timeEnd(timerLabel);
         }
         catch (error) {
             logging_1.default.log(error, logging_1.default.LoggingCategories.ERROR);
@@ -158,5 +119,4 @@ function processExit(msg) {
 startup();
 const a = (0, test_1.toUpper)("a");
 const b = (0, test_1.toLower)("BBB");
-exports.api = api = new api_1.API();
 //# sourceMappingURL=server.js.map
