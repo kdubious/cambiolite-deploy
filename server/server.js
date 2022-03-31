@@ -38,6 +38,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.api = void 0;
 const fs = __importStar(require("fs"));
 const api_1 = require("./api");
+const registration_1 = require("./models/registration");
+const db_1 = __importDefault(require("./services/db"));
 const logging_1 = __importDefault(require("./utils/logging"));
 const shell_1 = __importDefault(require("./utils/shell"));
 const test_1 = require("./utils/test/test");
@@ -90,6 +92,10 @@ function startup() {
                     }
                     yield shell_1.default.executeAsync(complete);
                 }
+                const registrationData = yield db_1.default.get("registration:data");
+                const registration = new registration_1.Registration(registrationData);
+                registration.firmware = "3.1.003";
+                yield db_1.default.set("registration:data", registration);
                 exports.api = api = new api_1.API();
                 console.timeEnd(timerLabel);
                 return;
