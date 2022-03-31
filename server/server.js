@@ -64,48 +64,75 @@ function startup() {
             const timerLabel = "[BOOT] System boot sequence took";
             console.log("\x1b[36m%s\x1b[0m", motd);
             console.time(timerLabel);
-            const raat = shell_1.default.executeAsync(moveRaat).then((z) => {
-                console.log("getRaat");
-                shell_1.default.executeAsync(getRaat)
-                    .then((z) => {
-                    console.log("chmodRaat");
-                    shell_1.default.executeAsync(chmodRaat).then((z) => {
-                        console.log("cleanRaat");
-                        shell_1.default.executeAsync(cleanRaat);
-                    });
-                })
-                    .catch((z) => {
-                    console.log("undoRaat");
-                    shell_1.default.executeAsync(undoRaat);
-                });
-            });
-            const codec = shell_1.default.executeAsync(moveCodec)
-                .then((z) => {
-                console.log("getCodec");
-                shell_1.default.executeAsync(getCodec).then((z) => {
-                    console.log("cleanCodec");
-                    shell_1.default.executeAsync(cleanCodec);
-                });
-            })
-                .catch((z) => {
-                shell_1.default.executeAsync(undoCodec);
-            });
-            fs.access(fileToCheck, fs.constants.F_OK, (err) => {
+            fs.access(fileToCheck, fs.constants.F_OK, (err) => __awaiter(this, void 0, void 0, function* () {
                 if (err) {
-                    console.log("NO FILE");
-                    console.log("[raat, codec]");
-                    Promise.all([raat, codec]).then((z) => {
-                        console.log("[raat, codec] complete");
-                        shell_1.default.executeAsync(complete);
-                        exports.api = api = new api_1.API();
-                        return;
-                    });
+                    console.log("move Raat");
+                    yield shell_1.default.executeAsync(moveRaat);
+                    try {
+                        console.log("get Raat");
+                        yield shell_1.default.executeAsync(getRaat);
+                    }
+                    catch (_a) {
+                        console.log("undo Raat");
+                        yield shell_1.default.executeAsync(undoRaat);
+                    }
+                    console.log("chmodRaat");
+                    yield shell_1.default.executeAsync(chmodRaat);
+                    console.log("move Codec");
+                    yield shell_1.default.executeAsync(moveCodec);
+                    try {
+                        console.log("get Codec");
+                        yield shell_1.default.executeAsync(getCodec);
+                    }
+                    catch (_b) {
+                        console.log("undo Codec");
+                        yield shell_1.default.executeAsync(undoCodec);
+                    }
                 }
-                else {
-                    exports.api = api = new api_1.API();
-                    return;
-                }
-            });
+                exports.api = api = new api_1.API();
+                return;
+            }));
+            // const raat = Shell.executeAsync(moveRaat).then((z) => {
+            //   console.log("getRaat");
+            //   Shell.executeAsync(getRaat)
+            //     .then((z) => {
+            //       console.log("chmodRaat");
+            //       Shell.executeAsync(chmodRaat).then((z) => {
+            //         console.log("cleanRaat");
+            //         Shell.executeAsync(cleanRaat);
+            //       });
+            //     })
+            //     .catch((z) => {
+            //       console.log("undoRaat");
+            //       Shell.executeAsync(undoRaat);
+            //     });
+            // });
+            // const codec = Shell.executeAsync(moveCodec)
+            //   .then((z) => {
+            //     console.log("getCodec");
+            //     Shell.executeAsync(getCodec).then((z) => {
+            //       console.log("cleanCodec");
+            //       Shell.executeAsync(cleanCodec);
+            //     });
+            //   })
+            //   .catch((z) => {
+            //     Shell.executeAsync(undoCodec);
+            //   });
+            // fs.access(fileToCheck, fs.constants.F_OK, (err) => {
+            //   if (err) {
+            //     console.log("NO FILE");
+            //     console.log("[raat, codec]");
+            //     Promise.all([raat, codec]).then((z) => {
+            //       console.log("[raat, codec] complete");
+            //       Shell.executeAsync(complete);
+            //       api = new API();
+            //       return;
+            //     });
+            //   } else {
+            //     api = new API();
+            //     return;
+            //   }
+            // });
             console.timeEnd(timerLabel);
         }
         catch (error) {
