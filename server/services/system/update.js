@@ -22,9 +22,8 @@ const getCurrentMotd = () => __awaiter(void 0, void 0, void 0, function* () {
     rslt +=
         "COMMIT: " +
             (yield shell_1.default.executeAsync(`git rev-parse HEAD`)).substring(0, 7);
-    rslt +=
-        "SERIAL: " +
-            (yield db_1.default.get("device:serial"));
+    rslt += "\n";
+    rslt += "SERIAL: " + (yield db_1.default.get("device:serial"));
     return rslt;
 });
 // not needed if set up right:
