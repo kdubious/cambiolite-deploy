@@ -13,17 +13,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const config_1 = __importDefault(require("../../config"));
+const registration_1 = require("../../models/registration");
 const logging_1 = __importDefault(require("../../utils/logging"));
 const shell_1 = __importDefault(require("../../utils/shell"));
 const db_1 = __importDefault(require("../db"));
 const getCurrentMotd = () => __awaiter(void 0, void 0, void 0, function* () {
+    const registrationData = yield db_1.default.get("registration:data");
+    const registration = new registration_1.Registration(registrationData);
     let rslt = yield shell_1.default.executeAsync(`cat ${config_1.default.paths.motd}`);
     rslt += "\n";
     rslt +=
         "COMMIT: " +
             (yield shell_1.default.executeAsync(`git rev-parse HEAD`)).substring(0, 7);
     rslt += "\n";
-    rslt += "SERIAL: " + (yield db_1.default.get("device:serial"));
+    rslt += "FIRMWARE: " + registration.firmware;
+    rslt += "\n";
+    rslt += "SERIAL: " + registration.serial_number;
     return rslt;
 });
 // not needed if set up right:
