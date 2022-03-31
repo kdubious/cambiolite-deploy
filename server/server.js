@@ -47,7 +47,7 @@ logging_1.default.log(path.resolve(__dirname, "./motd.txt"));
 const moveRaat = "mv /opt/roon/raat_app /opt/roon/raat_app-OLD";
 const undoRaat = "mv /opt/roon/raat_app-OLD /opt/roon/raat_app";
 const getRaat = "wget -O /opt/roon/raat_app http://cdn.musicapristina.com/raat_app";
-const chmodRaat = "chmod + x /opt/roon/raat_app";
+const chmodRaat = "chmod +x /opt/roon/raat_app";
 const cleanRaat = "rm /opt/roon/raat_app-OLD";
 const moveCodec = "mv /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko-OLD";
 const undoCodec = "mv /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko-OLD /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko";
