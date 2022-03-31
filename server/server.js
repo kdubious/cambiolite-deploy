@@ -53,7 +53,7 @@ const moveCodec = "mv /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko /lib/modules
 const undoCodec = "mv /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko-OLD /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko";
 const getCodec = "wget -O /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko http://cdn.musicapristina.com/snd-soc-mp-codec.ko";
 const cleanCodec = "rm /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko-OLD";
-const fileToCheck = path.resolve(__dirname, "./update.txt");
+const fileToCheck = "/opt/update.txt";
 const complete = "touch " + fileToCheck;
 let api;
 exports.api = api;
