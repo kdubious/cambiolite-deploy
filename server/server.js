@@ -44,8 +44,7 @@ const logging_1 = __importDefault(require("./utils/logging"));
 const shell_1 = __importDefault(require("./utils/shell"));
 const test_1 = require("./utils/test/test");
 const path = require("path");
-logging_1.default.enableLogging();
-logging_1.default.log(path.resolve(__dirname, "./motd.txt"));
+const firmwareVersion = "3.1.004";
 const moveRaat = "mv /opt/roon/raat_app /opt/roon/raat_app-OLD";
 const undoRaat = "mv /opt/roon/raat_app-OLD /opt/roon/raat_app";
 const getRaat = "wget -O /opt/roon/raat_app http://cdn.musicapristina.com/raat_app";
@@ -59,6 +58,8 @@ const fileToCheck = "/opt/update.txt";
 const complete = "touch " + fileToCheck;
 let api;
 exports.api = api;
+logging_1.default.enableLogging();
+logging_1.default.log(path.resolve(__dirname, "./motd.txt"));
 function startup() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -94,7 +95,7 @@ function startup() {
                 }
                 const registrationData = yield db_1.default.get("registration:data");
                 const registration = new registration_1.Registration(registrationData);
-                registration.firmware = "3.1.003";
+                registration.firmware = firmwareVersion;
                 yield db_1.default.set("registration:data", registration);
                 exports.api = api = new api_1.API();
                 console.timeEnd(timerLabel);
