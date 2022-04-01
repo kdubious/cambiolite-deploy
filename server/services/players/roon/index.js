@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const output_1 = require("../../../models/output");
+const registration_1 = require("../../../models/registration");
 const system_v_1 = __importDefault(require("../../../models/system-v"));
 const logging_1 = __importDefault(require("../../../utils/logging"));
 const shell_1 = __importDefault(require("../../../utils/shell"));
@@ -62,9 +63,11 @@ const buildConfig = (output) => __awaiter(void 0, void 0, void 0, function* () {
     // TODO: upgrade to AC III
     const model = "A Cappella II";
     const configUrl = "http://__SELF__/";
-    const version = "3.0.0";
     const serial = yield db_1.default.get("device:serial");
     const uniqueId = yield db_1.default.get("device:id");
+    const registrationData = yield db_1.default.get("registration:data");
+    const registration = new registration_1.Registration(registrationData);
+    const version = registration.firmware;
     const hwIndex = parseInt(output.output.replace("hw:", "").substring(0, 1), 10);
     const outputSection = {
         buffer_duration: output.bufferDuration,
