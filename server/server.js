@@ -44,7 +44,7 @@ const logging_1 = __importDefault(require("./utils/logging"));
 const shell_1 = __importDefault(require("./utils/shell"));
 const test_1 = require("./utils/test/test");
 const path = require("path");
-const firmwareVersion = "3.1.004";
+const firmwareVersion = "3.1.005";
 const moveRaat = "mv /opt/roon/raat_app /opt/roon/raat_app-OLD";
 const undoRaat = "mv /opt/roon/raat_app-OLD /opt/roon/raat_app";
 const getRaat = "wget -O /opt/roon/raat_app http://cdn.musicapristina.com/raat_app";
@@ -54,7 +54,7 @@ const moveCodec = "mv /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko /lib/modules
 const undoCodec = "mv /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko-OLD /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko";
 const getCodec = "wget -O /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko http://cdn.musicapristina.com/snd-soc-mp-codec.ko";
 const cleanCodec = "rm /lib/modules/5.2.18/extra/snd-soc-mp-codec.ko-OLD";
-const fileToCheck = "/opt/update.txt";
+const fileToCheck = "/opt/update2.txt";
 const complete = "touch " + fileToCheck;
 let api;
 exports.api = api;
