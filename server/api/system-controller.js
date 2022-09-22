@@ -98,6 +98,13 @@ systemRouter.post("/remote/kill", function (req, res, next) {
         logging_1.default.log("* END REMOTE: post response", logging_1.default.LoggingCategories.SERVICES);
     });
 });
+systemRouter.post("/reboot", function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        logging_1.default.log("* BEGIN REBOOT", logging_1.default.LoggingCategories.SERVICES);
+        (0, errors_1.handleAsyncRouteErrors)(res.send(yield config_1.default.reboot()));
+        logging_1.default.log("* END REBOOT: post response", logging_1.default.LoggingCategories.SERVICES);
+    });
+});
 exports.default = systemRouter;
 // public getConfig = async (req: Request, res: Response, next: NextFunction) => {
 //     systemConfig.get().then((output) => {
