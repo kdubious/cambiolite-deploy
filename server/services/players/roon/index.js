@@ -99,7 +99,7 @@ const buildConfig = (output) => __awaiter(void 0, void 0, void 0, function* () {
         lost_action: hwIndex === 0 ? "" : "exit",
         type: "alsa",
     };
-    return {
+    var retVal = {
         config_url: configUrl,
         model,
         output: outputSection,
@@ -109,8 +109,11 @@ const buildConfig = (output) => __awaiter(void 0, void 0, void 0, function* () {
         vendor,
         version,
         volume: volumeSection,
-        watch: watchSection,
     };
+    if (output.watch) {
+        retVal.watch = watchSection;
+    }
+    return retVal;
 });
 const service = {
     disable: () => __awaiter(void 0, void 0, void 0, function* () {

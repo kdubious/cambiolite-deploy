@@ -60,7 +60,9 @@ const setAudioConfig = (output) => __awaiter(void 0, void 0, void 0, function* (
     multi = db_1.default.multiSet("audio:output", JSON.stringify(output), multi);
     logging_1.default.log(output, logging_1.default.LoggingCategories.SERVICES);
     const r = (restart) => __awaiter(void 0, void 0, void 0, function* () {
-        const audio_roon = roon_1.default.saveConfig(output).then((roonOk) => {
+        const audio_roon = roon_1.default
+            .saveConfig(output)
+            .then((roonOk) => {
             if (!roonOk) {
                 return false;
             }

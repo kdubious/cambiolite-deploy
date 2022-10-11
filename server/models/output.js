@@ -14,6 +14,7 @@ class Output {
         this.bufferDuration = 0.04;
         this.maxBits = 32;
         this.strategy = 1 /* OCXO */;
+        this.watch = false;
         Object.assign(this, jsonData);
     }
     get hwIndex() {
